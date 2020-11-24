@@ -1,0 +1,195 @@
+<div class="gallery__section-container">
+    <h3 style="text-align: center; font-family: Montserrat;">
+        {{ section.settings.title }}
+    </h3>
+     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic" rel="stylesheet" />
+    <div class="gallery__inner-container">
+        {% for block in section.blocks %}  
+            <div class="gallery__image-container-{{ forloop.index0 }}" >
+                <div id="wrapper">
+                    <img src="{{ block.settings.image | img_url: 'master' }}"/>
+                    <div  id="buttonblock">
+                        <h3 style="color:{{block.settings.text_color}}" src="{{ block.settings.image | img_url: 'master' }}" id="text1">{{ block.settings.description }} </h3>
+                        <a style="background-color:{{block.settings.button_color}}; color:{{block.settings.text_color}}; border: 2px solid {{block.settings.border_color}}"  onMouseOver="this.style.backgroundColor='{{block.settings.hover_color}}'" onMouseOut="this.style.backgroundColor='{{block.settings.button_color}}'"  href="{{ block.settings.link }}" id="button1">{{ block.settings.linktext }} </a>
+                    </div>
+                </div>    
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    #text1 {
+        font-family: Montserrat;
+        font-size: 1.5rem;
+        margin-bottom: 2.7rem;
+        font-weight: 500;
+    }
+    
+    #button1 {
+        padding: .8rem;
+        font-family: Montserrat;
+        transition: all 0.5s;
+    }
+    #wrapper {
+        position: relative;
+    }
+
+    #buttonblock {
+        position: absolute;
+        bottom: 5rem;
+        left: 8%;
+        z-index: 1;
+    }
+    .gallery__section-container {
+        display: grid;
+        padding: 5rem;
+    }
+
+@media only screen and (min-width: 376px) and (max-width: 760px) {
+        .gallery__section-container {
+            padding: 0;
+        }
+    }
+
+
+    @media only screen and (max-width: 375px) {
+        .gallery__section-container {
+            padding: 0;
+        }
+    }
+    
+    .gallery__inner-container {
+        display: grid;
+        grid-gap: 10px; 
+        line-height: 0px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr; 
+        grid-template-areas:
+            "pos1 pos1 pos2 pos3"
+            "pos1 pos1 pos4 pos5";
+     }
+
+    @media only screen and (min-width: 376px) and (max-width: 760px) {
+        .gallery__inner-container {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-template-areas: 
+                "pos1 pos1"
+                "pos1 pos1"
+                "pos2 pos3"
+                "pos4 pos5";
+        }
+    }
+
+    @media only screen and (max-width: 375px) {
+        .gallery__inner-container {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-areas: 
+                "pos1"
+                "pos2"
+                "pos3"
+                "pos4"
+                "pos5";
+        }
+    }   
+    .gallery__image-container {
+        display: grid;
+        color: {{block.settings.text_color}}
+    }
+
+    .gallery__image-container-0 {
+        grid-area: pos1;
+
+    }
+    .gallery__image-container-1 {
+        grid-area: pos2;
+    }
+    .gallery__image-container-2 {
+        grid-area: pos3;
+    }
+    .gallery__image-container-3 {
+        grid-area: pos4;
+    }
+    .gallery__image-container-4 {
+        grid-area: pos5;
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Gallery Images2",
+    "max_blocks": 5,
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Enter title",
+            "default": "Gallery Section"
+        }        
+    ],
+
+    "blocks": [
+        {
+            "type": "image",
+            "name": "images",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "image",
+                    "info": "800 x 800px recommended"
+                },
+                 {
+                    "type": "text",
+                    "id": "linktext",
+                    "label": "Button text",
+                    "default": "click here"
+                }, 
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Button link"
+                },
+                {
+                    "type": "text",
+                    "label": "description",
+                    "id": "description"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color",
+                    "label": "Text Color",
+                    "default": "#000000"
+                },
+                 {
+                    "type": "color",
+                    "id": "button_color",
+                    "label": "Button Color",
+                    "default": "#000000"
+                },
+                {
+                    "type": "color",
+                    "id": "hover_color",
+                    "label": "Hover Color",
+                    "default": "#000000"
+                },
+                 {
+                    "type": "color",
+                    "id": "border_color",
+                    "label": "Border Color",
+                    "default": "#000000"
+                }
+            ]
+        }
+    ],
+    
+    "presets": [
+        {
+            "name": "Gallery images2",
+            "category": "image"
+        }
+    ]
+}
+{% endschema %}
